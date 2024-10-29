@@ -15,7 +15,7 @@ function App() {
     const handleParseScript = async (script) => {
         try {
             // Parse script to extract characters and environments
-            const parseResponse = await fetch('/api/parse-script', {
+            const parseResponse = await fetch('http://localhost:5000/api/parse-script', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ script }),
@@ -23,7 +23,7 @@ function App() {
             const { characters, environments } = await parseResponse.json();
 
             // Fetch models based on parsed data
-            const modelResponse = await fetch('/api/fetch-models', {
+            const modelResponse = await fetch('http://localhost:5000/api/fetch-models', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ characters, environments }),
