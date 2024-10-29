@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState } from 'react';
 import ScriptInput from './components/ScriptInput';
 import SceneRenderer from './components/SceneRenderer';
@@ -14,7 +13,6 @@ function App() {
 
     const handleParseScript = async (script) => {
         try {
-            // Parse script to extract characters and environments
             const parseResponse = await fetch('http://localhost:5000/api/parse-script', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -22,7 +20,6 @@ function App() {
             });
             const { characters, environments } = await parseResponse.json();
 
-            // Fetch models based on parsed data
             const modelResponse = await fetch('http://localhost:5000/api/fetch-models', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -44,13 +41,12 @@ function App() {
         }
     };
 
-
-const handleUpdateCharacter = (updatedProperties) => {
+    const handleUpdateCharacter = (updatedProperties) => {
         setCharacterProperties(updatedProperties);
     };
 
     return (
-          <div className="app-container">
+        <div className="app-container">
             <h1>HypenAi - Automated 3D Animation</h1>
             <ScriptInput onParseScript={handleParseScript} />
             {sceneData.length > 0 && (
