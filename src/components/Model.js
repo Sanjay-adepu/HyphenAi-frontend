@@ -8,7 +8,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useFrame } from '@react-three/fiber';
 
 function Model({ modelUrl, position, color, size, accessory }) {
-    const gltf = useLoader(GLTFLoader, modelUrl);
+     const gltf = useLoader(GLTFLoader, 'https://threejs.org/examples/models/gltf/Flamingo.glb');
     const modelRef = useRef();
 
     // Adjust the scale and color of the model
