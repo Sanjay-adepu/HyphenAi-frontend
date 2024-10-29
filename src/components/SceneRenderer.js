@@ -1,12 +1,11 @@
-// src/components/SceneRenderer.js
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
-import Model from './Model'; // Component to load models
+import Model from './Model';
 
 function SceneRenderer({ sceneData }) {
     return (
-        <Canvas>
+        <Canvas style={{ background: '#cccccc' }}>
             <ambientLight intensity={0.5} />
             <pointLight position={[10, 10, 10]} />
             <OrbitControls />
