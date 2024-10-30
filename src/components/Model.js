@@ -1,6 +1,7 @@
 
 
 
+
 // src/components/Model.js
 import React, { useRef } from 'react';
 import { useLoader } from '@react-three/fiber';
@@ -8,10 +9,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useFrame } from '@react-three/fiber';
 
 function Model({ modelUrl, position, color, size, accessory }) {
-     const gltf = useLoader(GLTFLoader, 'https://threejs.org/examples/models/gltf/Flamingo.glb');
+    const gltf = useLoader(GLTFLoader, modelUrl); // Ensure this uses the correct URL
     const modelRef = useRef();
 
-    // Adjust the scale and color of the model
     useFrame(() => {
         if (modelRef.current) {
             modelRef.current.scale.set(size, size, size);
@@ -21,13 +21,15 @@ function Model({ modelUrl, position, color, size, accessory }) {
         }
     });
 
-    return (
-        <primitive object={gltf.scene} position={position} ref={modelRef}>
-            {/* Conditional rendering of accessories can be handled here */}
+    return <primitive object={gltf.scene} position={position} ref={modelRef} >
+
+ {/* Conditional rendering of accessories can be handled here */}
             {accessory === 'hat' && <mesh /* hat model */ />}
-            {accessory === 'glasses' && <mesh /* glasses model */ />}
-        </primitive>
-    );
+            {accessory === 'glasses' && <mesh /* glasses model */ />};
+
+ </primitive>
 }
+
+
 
 export default Model;
