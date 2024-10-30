@@ -11,6 +11,10 @@ function App() {
         accessory: 'none',
     });
 
+
+const [debugInfo, setDebugInfo] = useState('');
+
+
     const handleParseScript = async (script) => {
         try {
             const parseResponse = await fetch('http://localhost:5000/api/parse-script', {
@@ -21,11 +25,12 @@ function App() {
             const { characters, environments } = await parseResponse.json();
 
             const modelResponse = await fetch('http://localhost:5000/api/fetch-models', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ characters, environments }),
-            });
-            const modelData = await modelResponse.json();
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ characters, environments }),
+});
+const modelData = await modelResponse.json();
+setDebugInfo("Model data: " + JSON.stringify(modelData));
 
             const sceneObjects = [
                 ...modelData.characterModels,
@@ -46,20 +51,28 @@ function App() {
     };
 
     return (
-        <div className="app-container">
-            <h1>HypenAi - Automated 3D Animation</h1>
-            <ScriptInput onParseScript={handleParseScript} />
-            {sceneData.length > 0 && (
-                <SceneRenderer
-                    sceneData={sceneData.map((modelData) => ({
-                        ...modelData,
-                        ...characterProperties,
-                    }))}
-                />
-            )}
-            <CharacterCustomization onUpdateCharacter={handleUpdateCharacter} />
+     
+    <div className="app-container">
+        <h1>HypenAi - Automated 3D Animation</h1>
+        <ScriptInput onParseScript={handleParseScript} />
+        {sceneData.length > 0 && (
+            <SceneRenderer
+                sceneData={sceneData.map((modelData) => ({
+                    ...modelData,
+                    ...characterProperties,
+                }))}
+            />
+        )}
+        <CharacterCustomization onUpdateCharacter={handleUpdateCharacter} />
+
+        {/* Debug Info Section */}
+        <div style={{ marginTop: '20px', padding: '10px', border: '1px solid #ccc' }}>
+            <h3>Debug Information</h3>
+            <pre>{debugInfo}</pre>
         </div>
-    );
+    </div>
+);
+   
 }
 
 export default App;
