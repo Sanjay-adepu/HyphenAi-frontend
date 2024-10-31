@@ -6,6 +6,7 @@ function Model({ modelUrl, position }) {
         console.error('Error loading model:', error);
     });
 
+
     return <primitive object={scene} position={position} />;
 }
 
