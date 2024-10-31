@@ -11,6 +11,7 @@ function App() {
         accessory: 'none',
     });
 
+
     const [debugInfo, setDebugInfo] = useState('');
 
     const handleParseScript = async (script) => {
