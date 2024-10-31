@@ -1,24 +1,12 @@
-import React, { useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
-import Model from './Model';
+import React from 'react';
+import { useGLTF } from '@react-three/drei';
 
-function SceneRenderer({ sceneData }) {
-    useEffect(() => {
-        console.log("Rendering SceneRenderer with data:", sceneData);
-    }, [sceneData]);
+function Model({ modelUrl, position }) {
+    const { scene } = useGLTF(modelUrl, true, (error) => {
+        console.error('Error loading model:', error);
+    });
 
-    return (
-        <Canvas style={{ background: '#cccccc', width: '100vw', height: '100vh' }}>
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} />
-            <OrbitControls />
-            {sceneData.map((data, index) => (
-                <Model key={index} modelUrl={data.modelUrl} position={data.position} />
-            ))}
-            <Environment preset="sunset" />
-        </Canvas>
-    );
+    return <primitive object={scene} position={position} />;
 }
 
-export default SceneRenderer;
+export default Model;
