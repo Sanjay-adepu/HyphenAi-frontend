@@ -7,6 +7,7 @@ function CharacterCustomization({ onUpdateCharacter }) {
     const [accessory, setAccessory] = useState('hat');
 
     const handleUpdate = () => {
+e.preventDefault();
         onUpdateCharacter({ color, size, accessory });
     };
 
