@@ -11,9 +11,7 @@ function App() {
         accessory: 'none',
     });
 
-
-const [debugInfo, setDebugInfo] = useState('');
-
+    const [debugInfo, setDebugInfo] = useState('');
 
     const handleParseScript = async (script) => {
         try {
@@ -25,17 +23,17 @@ const [debugInfo, setDebugInfo] = useState('');
             const { characters, environments } = await parseResponse.json();
 
             const modelResponse = await fetch('http://localhost:5000/api/fetch-models', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ characters, environments }),
-});
-const modelData = await modelResponse.json();
-setDebugInfo("Model data: " + JSON.stringify(modelData));
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ characters, environments }),
+            });
+            const modelData = await modelResponse.json();
+            setDebugInfo("Model data: " + JSON.stringify(modelData));
 
             const sceneObjects = [
-    ...modelData.characterModels,
-    ...modelData.environmentModels,
-].flat().filter(model => model.modelUrl);
+                ...modelData.characterModels,
+                ...modelData.environmentModels,
+            ].flat().filter(model => model.modelUrl);
 
             setSceneData(sceneObjects.map((model, idx) => ({
                 modelUrl: model.modelUrl,
@@ -43,6 +41,7 @@ setDebugInfo("Model data: " + JSON.stringify(modelData));
             })));
         } catch (error) {
             console.error('Error fetching models:', error);
+            setDebugInfo('Error fetching models: ' + error.message);
         }
     };
 
@@ -51,28 +50,26 @@ setDebugInfo("Model data: " + JSON.stringify(modelData));
     };
 
     return (
-     
-    <div className="app-container">
-        <h1>HypenAi - Automated 3D Animation</h1>
-        <ScriptInput onParseScript={handleParseScript} />
-        {sceneData.length > 0 && (
-            <SceneRenderer
-                sceneData={sceneData.map((modelData) => ({
-                    ...modelData,
-                    ...characterProperties,
-                }))}
-            />
-        )}
-        <CharacterCustomization onUpdateCharacter={handleUpdateCharacter} />
+        <div className="app-container">
+            <h1>HypenAi - Automated 3D Animation</h1>
+            <ScriptInput onParseScript={handleParseScript} />
+            {sceneData.length > 0 && (
+                <SceneRenderer
+                    sceneData={sceneData.map((modelData) => ({
+                        ...modelData,
+                        ...characterProperties,
+                    }))}
+                />
+            )}
+            <CharacterCustomization onUpdateCharacter={handleUpdateCharacter} />
 
-        {/* Debug Info Section */}
-        <div style={{ marginTop: '20px', padding: '10px', border: '1px solid #ccc' }}>
-            <h3>Debug Information</h3>
-            <pre>{debugInfo}</pre>
+            {/* Debug Info Section */}
+            <div style={{ marginTop: '20px', padding: '10px', border: '1px solid #ccc' }}>
+                <h3>Debug Information</h3>
+                <pre>{debugInfo}</pre>
+            </div>
         </div>
-    </div>
-);
-   
+    );
 }
 
 export default App;
