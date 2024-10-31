@@ -33,9 +33,9 @@ const modelData = await modelResponse.json();
 setDebugInfo("Model data: " + JSON.stringify(modelData));
 
             const sceneObjects = [
-                ...modelData.characterModels,
-                ...modelData.environmentModels,
-            ].flat();
+    ...modelData.characterModels,
+    ...modelData.environmentModels,
+].flat().filter(model => model.modelUrl);
 
             setSceneData(sceneObjects.map((model, idx) => ({
                 modelUrl: model.modelUrl,
