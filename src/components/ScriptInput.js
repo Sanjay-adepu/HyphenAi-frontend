@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 function ScriptInput({ onParseScript }) {
     const [script, setScript] = useState('');
 
-    const handleParse = (e) => {
+    const handleParse = (e) => 
+{
 e.preventDefault();
         onParseScript(script); // send script to backend for parsing
     };
