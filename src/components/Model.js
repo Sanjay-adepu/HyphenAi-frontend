@@ -1,35 +1,24 @@
+import React, { useEffect } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Environment } from '@react-three/drei';
+import Model from './Model';
 
+function SceneRenderer({ sceneData }) {
+    useEffect(() => {
+        console.log("Rendering SceneRenderer with data:", sceneData);
+    }, [sceneData]);
 
-
-
-// src/components/Model.js
-import React, { useRef } from 'react';
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { useFrame } from '@react-three/fiber';
-
-function Model({ modelUrl, position, color, size, accessory }) {
-    const gltf = useLoader(GLTFLoader, modelUrl); // Ensure this uses the correct URL
-    const modelRef = useRef();
-
-    useFrame(() => {
-        if (modelRef.current) {
-            modelRef.current.scale.set(size, size, size);
-            modelRef.current.traverse((child) => {
-                if (child.isMesh) child.material.color.set(color);
-            });
-        }
-    });
-
-    return <primitive object={gltf.scene} position={position} ref={modelRef} >
-
- {/* Conditional rendering of accessories can be handled here */}
-            {accessory === 'hat' && <mesh /* hat model */ />}
-            {accessory === 'glasses' && <mesh /* glasses model */ />};
-
- </primitive>
+    return (
+        <Canvas style={{ background: '#cccccc', width: '100vw', height: '100vh' }}>
+            <ambientLight intensity={0.5} />
+            <pointLight position={[10, 10, 10]} />
+            <OrbitControls />
+            {sceneData.map((data, index) => (
+                <Model key={index} modelUrl={data.modelUrl} position={data.position} />
+            ))}
+            <Environment preset="sunset" />
+        </Canvas>
+    );
 }
 
-
-
-export default Model;
+export default SceneRenderer;
