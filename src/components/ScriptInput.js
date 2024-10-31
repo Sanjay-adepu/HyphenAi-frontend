@@ -5,6 +5,7 @@ function ScriptInput({ onParseScript }) {
     const [script, setScript] = useState('');
 
     const handleParse = () => {
+e.preventDefault();
         onParseScript(script); // send script to backend for parsing
     };
 
